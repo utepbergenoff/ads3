@@ -9,7 +9,6 @@ public class MyTestingClass {
         this.name = name;
     }
 
-    // Custom hashCode method (without using Objects.hash())
     @Override
     public int hashCode() {
         int hash = 17;

@@ -1,7 +1,6 @@
 import java.util.LinkedList;
 
 public class MyHashTable<K, V> {
-    // Node class for LinkedList
     private class HashNode<K, V> {
         private K key;
         private V value;
@@ -20,28 +19,24 @@ public class MyHashTable<K, V> {
     }
 
     private HashNode<K, V>[] chainArray;
-    private int M = 11; // default number of chains
+    private int M = 11;
     private int size;
 
-    // Constructor with default M
     public MyHashTable() {
         chainArray = new HashNode[M];
         size = 0;
     }
 
-    // Constructor with user-defined M
     public MyHashTable(int M) {
         this.M = M;
         chainArray = new HashNode[M];
         size = 0;
     }
 
-    // Hash function
     private int hash(K key) {
         return (key.hashCode() & 0x7fffffff) % M;
     }
 
-    // Returns current size
     public int size() {
         return size;
     }
@@ -50,7 +45,6 @@ public class MyHashTable<K, V> {
         int index = hash(key);
         HashNode<K, V> head = chainArray[index];
 
-        // Check if key is already present
         while (head != null) {
             if (head.key.equals(key)) {
                 head.value = value;
@@ -59,13 +53,13 @@ public class MyHashTable<K, V> {
             head = head.next;
         }
 
-        // Insert new node
         size++;
         head = chainArray[index];
         HashNode<K, V> newNode = new HashNode<>(key, value);
         newNode.next = head;
         chainArray[index] = newNode;
     }
+
     public V get(K key) {
         int index = hash(key);
         HashNode<K, V> head = chainArray[index];
@@ -76,8 +70,9 @@ public class MyHashTable<K, V> {
             }
             head = head.next;
         }
-        return null; // key not found
+        return null;
     }
+
     public V remove(K key) {
         int index = hash(key);
         HashNode<K, V> head = chainArray[index];
@@ -103,6 +98,7 @@ public class MyHashTable<K, V> {
 
         return head.value;
     }
+
     public boolean contains(V value) {
         for (int i = 0; i < M; i++) {
             HashNode<K, V> head = chainArray[i];
@@ -115,6 +111,7 @@ public class MyHashTable<K, V> {
         }
         return false;
     }
+
     public K getKey(V value) {
         for (int i = 0; i < M; i++) {
             HashNode<K, V> head = chainArray[i];
@@ -127,12 +124,11 @@ public class MyHashTable<K, V> {
         }
         return null;
     }
-    // Add this public method to access the number of buckets
+
     public int getNumberOfBuckets() {
         return M;
     }
 
-    // Add this public method to access a bucket (chain) at a given index
     public LinkedList<HashNode<K, V>> getBucket(int index) {
         LinkedList<HashNode<K, V>> bucket = new LinkedList<>();
         HashNode<K, V> current = chainArray[index];
